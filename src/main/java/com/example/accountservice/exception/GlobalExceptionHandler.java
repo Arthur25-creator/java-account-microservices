@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     }
     
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleCustomerNotFound(IllegalArgumentException ex) {
+    public ResponseEntity<ErrorResponse> handleInvalidAccountType(IllegalArgumentException ex) {
     	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 new ErrorResponse(400, ex.getMessage())
             );
