@@ -1,13 +1,11 @@
 package com.example.accountservice.controller;
 
 import com.example.accountservice.dto.AccountInfo;
+import com.example.accountservice.dto.ApiResponse;
 import com.example.accountservice.dto.CustomerInquiryResponse;
 import com.example.accountservice.dto.ErrorResponse;
 import com.example.accountservice.model.Account;
 import com.example.accountservice.service.AccountService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,13 +46,4 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    static class ApiResponse {
-        private Long customerNumber;
-        private int transactionStatusCode;
-        private String transactionStatusDescription;
-    }
 }

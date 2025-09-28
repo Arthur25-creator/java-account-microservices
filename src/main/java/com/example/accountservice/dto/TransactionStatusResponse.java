@@ -1,4 +1,4 @@
-package com.example.accountservice.model;
+package com.example.accountservice.dto;
 
 import lombok.Data;
 

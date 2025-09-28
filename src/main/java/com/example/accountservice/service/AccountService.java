@@ -62,7 +62,6 @@ public class AccountService {
         Optional<Account> optAccount = accountRepository.findByCustomerNumber(customerNumber);
 
         if (optAccount.isEmpty()) {
-            // Customer not found
             return new CustomerInquiryResponse(
                 null, null, null, null, null, null,
                 Collections.emptyList(),
@@ -73,8 +72,6 @@ public class AccountService {
         Account account = optAccount.get();
 
         List<SavingsAccount> savingsAccounts = savingsRepository.findByCustomer_CustomerNumber(customerNumber);
-
-        // Map SavingsAccount to SavingsDTO
         List<SavingsDto> savingsDTOs = savingsAccounts.stream()
             .map(s -> new SavingsDto(
                 s.getAccountNumber(),

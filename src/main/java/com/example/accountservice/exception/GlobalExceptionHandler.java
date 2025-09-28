@@ -3,7 +3,7 @@ package com.example.accountservice.exception;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.example.accountservice.model.TransactionStatusResponse;
+import com.example.accountservice.dto.TransactionStatusResponse;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.http.ResponseEntity;
