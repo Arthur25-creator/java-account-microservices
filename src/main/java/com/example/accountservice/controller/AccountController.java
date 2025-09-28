@@ -3,7 +3,6 @@ package com.example.accountservice.controller;
 import com.example.accountservice.dto.AccountInfo;
 import com.example.accountservice.dto.ApiResponse;
 import com.example.accountservice.dto.CustomerInquiryResponse;
-import com.example.accountservice.dto.ErrorResponse;
 import com.example.accountservice.model.Account;
 import com.example.accountservice.service.AccountService;
 import org.springframework.http.HttpStatus;
@@ -38,11 +37,6 @@ public class AccountController {
     @GetMapping("/{customerNumber}")
     public ResponseEntity<?> getCustomer(@PathVariable Long customerNumber) {
         CustomerInquiryResponse response = accountService.getCustomerByNumber(customerNumber);
-
-        if (response.getTransactionStatusCode() == 401) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(401, "Customer not found"));
-        }
-
         return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 

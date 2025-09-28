@@ -39,7 +39,6 @@ public class AccountServiceTest {
 
     @Test
     void testCreateAccount_WithSavingsType_ShouldSaveSavings() {
-        // Arrange
         AccountInfo request = new AccountInfo();
         request.setCustomerName("John Doe");
         request.setCustomerMobile("09123456789");
@@ -54,10 +53,8 @@ public class AccountServiceTest {
 
         when(accountRepository.save(any(Account.class))).thenReturn(mockAccount);
 
-        // Act
         Account result = accountService.createAccount(request);
 
-        // Assert
         assertEquals(1L, result.getCustomerNumber());
         verify(accountRepository, times(1)).save(any(Account.class));
         verify(savingsRepository, times(1)).save(any(SavingsAccount.class));
@@ -65,11 +62,9 @@ public class AccountServiceTest {
 
     @Test
     void testCreateAccount_WithInvalidType_ShouldThrowException() {
-        // Arrange
         AccountInfo request = new AccountInfo();
-        request.setAccountType("X"); // Invalid type
+        request.setAccountType("X"); 
 
-        // Act & Assert
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             accountService.createAccount(request);
         });
@@ -79,7 +74,6 @@ public class AccountServiceTest {
 
     @Test
     void testGetCustomerByNumber_WhenFound_ShouldReturnResponse() {
-        // Arrange
         Long customerNumber = 1L;
 
         Account account = new Account();
@@ -100,10 +94,8 @@ public class AccountServiceTest {
         when(accountRepository.findByCustomerNumber(customerNumber)).thenReturn(Optional.of(account));
         when(savingsRepository.findByCustomer_CustomerNumber(customerNumber)).thenReturn(List.of(savings));
 
-        // Act
         CustomerInquiryResponse response = accountService.getCustomerByNumber(customerNumber);
 
-        // Assert
         assertEquals(302, response.getTransactionStatusCode());
         assertEquals("Customer Account found", response.getTransactionStatusDescription());
         assertEquals(1, response.getSavings().size());
@@ -112,14 +104,11 @@ public class AccountServiceTest {
 
     @Test
     void testGetCustomerByNumber_WhenNotFound_ShouldReturn401() {
-        // Arrange
         Long customerNumber = 999L;
         when(accountRepository.findByCustomerNumber(customerNumber)).thenReturn(Optional.empty());
 
-        // Act
         CustomerInquiryResponse response = accountService.getCustomerByNumber(customerNumber);
 
-        // Assert
         assertEquals(401, response.getTransactionStatusCode());
         assertEquals("Customer not found", response.getTransactionStatusDescription());
         assertTrue(response.getSavings().isEmpty());

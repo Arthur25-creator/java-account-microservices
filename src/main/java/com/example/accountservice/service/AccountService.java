@@ -4,13 +4,13 @@ package com.example.accountservice.service;
 import com.example.accountservice.dto.AccountInfo;
 import com.example.accountservice.dto.CustomerInquiryResponse;
 import com.example.accountservice.dto.SavingsDto;
+import com.example.accountservice.exception.CustomerNotFoundException;
 import com.example.accountservice.model.Account;
 import com.example.accountservice.model.AccountType;
 import com.example.accountservice.model.SavingsAccount;
 import com.example.accountservice.repository.AccountRepository;
 import com.example.accountservice.repository.SavingsRepository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,11 +62,7 @@ public class AccountService {
         Optional<Account> optAccount = accountRepository.findByCustomerNumber(customerNumber);
 
         if (optAccount.isEmpty()) {
-            return new CustomerInquiryResponse(
-                null, null, null, null, null, null,
-                Collections.emptyList(),
-                401, "Customer not found"
-            );
+           throw new CustomerNotFoundException("Customer not found");
         }
 
         Account account = optAccount.get();
