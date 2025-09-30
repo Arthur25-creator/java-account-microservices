@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.accountservice.dto.AccountInfo;
 import com.example.accountservice.dto.CustomerInquiryResponse;
+import com.example.accountservice.exception.CustomerNotFoundException;
 import com.example.accountservice.model.Account;
 import com.example.accountservice.model.AccountType;
 import com.example.accountservice.model.SavingsAccount;
@@ -103,15 +104,17 @@ public class AccountServiceTest {
     }
 
     @Test
-    void testGetCustomerByNumber_WhenNotFound_ShouldReturn401() {
+    void testGetCustomerByNumber_WhenNotFound_ShouldThrowException() {
         Long customerNumber = 999L;
         when(accountRepository.findByCustomerNumber(customerNumber)).thenReturn(Optional.empty());
 
-        CustomerInquiryResponse response = accountService.getCustomerByNumber(customerNumber);
+        CustomerNotFoundException exception = assertThrows(
+            CustomerNotFoundException.class,
+            () -> accountService.getCustomerByNumber(customerNumber)
+        );
 
-        assertEquals(401, response.getTransactionStatusCode());
-        assertEquals("Customer not found", response.getTransactionStatusDescription());
-        assertTrue(response.getSavings().isEmpty());
+        assertEquals("Customer not found", exception.getMessage());
     }
+
 }
 
