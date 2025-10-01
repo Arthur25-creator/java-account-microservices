@@ -1,6 +1,6 @@
 package com.example.accountservice.controller;
 
-import com.example.accountservice.dto.AccountInfo;
+import com.example.accountservice.dto.AccountDto;
 import com.example.accountservice.dto.ApiResponse;
 import com.example.accountservice.dto.CustomerInquiryResponse;
 import com.example.accountservice.model.Account;
@@ -22,8 +22,8 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createAccount(@Valid @RequestBody AccountInfo accountInfo) {
-    	Account savedAccount = accountService.createAccount(accountInfo);
+    public ResponseEntity<?> createAccount(@Valid @RequestBody AccountDto accountDto) {
+    	Account savedAccount = accountService.createAccount(accountDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             new ApiResponse(

@@ -17,7 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.example.accountservice.dto.AccountInfo;
+import com.example.accountservice.dto.AccountDto;
 import com.example.accountservice.dto.CustomerInquiryResponse;
 import com.example.accountservice.exception.CustomerNotFoundException;
 import com.example.accountservice.model.Account;
@@ -40,7 +40,7 @@ public class AccountServiceTest {
 
     @Test
     void testCreateAccount_WithSavingsType_ShouldSaveSavings() {
-        AccountInfo request = new AccountInfo();
+        AccountDto request = new AccountDto();
         request.setCustomerName("John Doe");
         request.setCustomerMobile("09123456789");
         request.setCustomerEmail("john@example.com");
@@ -63,7 +63,7 @@ public class AccountServiceTest {
 
     @Test
     void testCreateAccount_WithInvalidType_ShouldThrowException() {
-        AccountInfo request = new AccountInfo();
+        AccountDto request = new AccountDto();
         request.setAccountType("X"); 
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class AccountInfo {
+public class AccountDto {
 
     @NotBlank(message = "Customer name is required")
     @Size(max = 50)

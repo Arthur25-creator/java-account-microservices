@@ -1,7 +1,7 @@
 package com.example.accountservice.service;
 
 
-import com.example.accountservice.dto.AccountInfo;
+import com.example.accountservice.dto.AccountDto;
 import com.example.accountservice.dto.CustomerInquiryResponse;
 import com.example.accountservice.dto.SavingsDto;
 import com.example.accountservice.exception.CustomerNotFoundException;
@@ -10,6 +10,8 @@ import com.example.accountservice.model.AccountType;
 import com.example.accountservice.model.SavingsAccount;
 import com.example.accountservice.repository.AccountRepository;
 import com.example.accountservice.repository.SavingsRepository;
+
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,21 +29,22 @@ public class AccountService {
     @Autowired
     private SavingsRepository savingsRepository;
 
-    public Account createAccount(AccountInfo request) {
+    @Transactional
+    public Account createAccount(AccountDto accountDto) {
 
         AccountType type;
         try {
-            type = AccountType.valueOf(request.getAccountType());
+            type = AccountType.valueOf(accountDto.getAccountType());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid account type. Must be 'S' or 'C'");
         }
 
         Account account = new Account();
-        account.setCustomerName(request.getCustomerName());
-        account.setCustomerMobile(request.getCustomerMobile());
-        account.setCustomerEmail(request.getCustomerEmail());
-        account.setAddress1(request.getAddress1());
-        account.setAddress2(request.getAddress2());
+        account.setCustomerName(accountDto.getCustomerName());
+        account.setCustomerMobile(accountDto.getCustomerMobile());
+        account.setCustomerEmail(accountDto.getCustomerEmail());
+        account.setAddress1(accountDto.getAddress1());
+        account.setAddress2(accountDto.getAddress2());
         account.setAccountType(type);
         
         Account savedAccount = accountRepository.save(account);
