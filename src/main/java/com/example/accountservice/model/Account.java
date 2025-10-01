@@ -1,5 +1,7 @@
 package com.example.accountservice.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,5 +36,8 @@ public class Account {
     @Enumerated(EnumType.STRING)
     @Column(length = 1, nullable = false)
     private AccountType accountType;
+    
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<SavingsAccount> savingsAccounts;
 
 }
